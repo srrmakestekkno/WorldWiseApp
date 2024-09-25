@@ -1,0 +1,19 @@
+.nav {
+  background-color: orangered;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* global class */
+:global(.test) {
+  background-color: red;
+}
+
+/* active class that will be created on the active page
+  access it global like this
+*/
+/* .nav :global(.active) */
