@@ -7,3 +7,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 );
+// using routing -> npm install react-router-dom
