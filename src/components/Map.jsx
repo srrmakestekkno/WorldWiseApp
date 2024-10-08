@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
 import {
   MapContainer,
@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useCities } from "../context/CitiesContext";
 import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 // eslint-disable-next-line react/prop-types
 const ChangeCenter = ({ position }) => {
@@ -23,16 +24,15 @@ const ChangeCenter = ({ position }) => {
 function Map() {
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams, setSearchParams] = useSearchParams();
+
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation({ defaultPosition: null });
 
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
-  console.log(geolocationPosition?.lat);
+  const [mapLat, mapLng] = useUrlPosition();
+
   useEffect(() => {
     if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
   }, [mapLat, mapLng]);
@@ -81,7 +81,7 @@ const DetectClick = () => {
   const navigate = useNavigate();
 
   useMapEvents({
-    click: (e) => navigate(`form?${e.latlng.lat}&${e.latlng.lng}`),
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 };
 
